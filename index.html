@@ -58,10 +58,6 @@
 
     <div class="menu" id="slide-menu"></div>
 
-    <div class="text-section">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut nisi vel purus commodo condimentum. Sed a sapien sed ligula feugiat viverra. Curabitur dignissim orci et felis euismod, vel volutpat augue mattis.</p>
-    </div>
-
     <canvas id="pdf-canvas"></canvas>
 
     <div class="controls" id="nav-controls">
@@ -90,7 +86,8 @@
             8: "Descripción de la Actividad 8.",
             9: "Descripción de la Actividad 9.",
             10: "Descripción de la Actividad 10.",
-            11: "Conclusiones y evaluación final."
+            11: "Conclusiones.",
+            12: "Toma de decisiones."
         };
 
         let pdfDoc,
@@ -159,13 +156,13 @@
         }
 
         function onNextPage() {
-            if (currentIndex >= 11) return;
+            if (currentIndex >= 12) return;
             currentIndex++;
             queueRenderPage(currentIndex);
         }
 
         function goToPage(index) {
-            if (index >= 0 && index <= 11) {
+            if (index >= 0 && index <= 12) {
                 currentIndex = index;
                 queueRenderPage(index);
             }
@@ -184,6 +181,7 @@
                 labels.push(`Actividad ${i}`);
             }
             labels.push('Conclusión');
+            labels.push('Toma de Decisiones');
 
             labels.forEach((label, index) => {
                 const btn = document.createElement('button');
