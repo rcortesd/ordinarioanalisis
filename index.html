@@ -41,7 +41,7 @@
     <h1>PDF Slide Viewer</h1>
 
     <div class="text-section">
-        <p>This is a slide-style PDF viewer. Use the buttons below to navigate through the pages of the PDF. You can also add descriptions, annotations, or context here.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut nisi vel purus commodo condimentum. Sed a sapien sed ligula feugiat viverra. Curabitur dignissim orci et felis euismod, vel volutpat augue mattis. Integer nec blandit eros. Vivamus nec augue nec tortor laoreet finibus.</p>
     </div>
 
     <canvas id="pdf-canvas"></canvas>
@@ -53,17 +53,17 @@
     </div>
 
     <div class="text-section">
-        <p>This is additional space below the PDF. You can use it to add notes, summaries, or links.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et vestibulum magna, nec accumsan lorem. Integer cursus bibendum eros, non malesuada libero laoreet sed. Vestibulum sed justo ut sem convallis dictum. Cras nec tellus quis sem tristique feugiat non a quam.</p>
     </div>
 
     <!-- PDF.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
-        const url = 'Ordinario.pdf'; // Ensure report.pdf is in the same directory
+        const url = 'Ordinario.pdf'; // Ensure Ordinario.pdf is in the same directory
 
-        let pdfDoc = null,
+        let pdfDoc,
             pageNum = 1,
-            pageRendering = true,
+            pageRendering = false,
             pageNumPending = null,
             scale = 1.0,
             canvas = document.getElementById('pdf-canvas'),
@@ -121,6 +121,8 @@
             pdfDoc = pdfDoc_;
             document.getElementById('page-count').textContent = pdfDoc.numPages;
             renderPage(pageNum);
+        }).catch(function(error) {
+            console.error('Error loading PDF: ', error);
         });
     </script>
 </body>
