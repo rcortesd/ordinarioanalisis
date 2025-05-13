@@ -31,6 +31,10 @@
             color: #333;
             text-align: center;
         }
+        .text-section h2 {
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
         canvas {
             border: 1px solid #ccc;
             margin-bottom: 20px;
@@ -75,19 +79,19 @@
     <script>
         const url = 'Ordinario.pdf';
         const pageNotes = {
-            0: "Introducción y objetivos generales.",
-            1: "Descripción de la Actividad 1.",
-            2: "Descripción de la Actividad 2.",
-            3: "Descripción de la Actividad 3.",
-            4: "Descripción de la Actividad 4.",
-            5: "Descripción de la Actividad 5.",
-            6: "Descripción de la Actividad 6.",
-            7: "Descripción de la Actividad 7.",
-            8: "Descripción de la Actividad 8.",
-            9: "Descripción de la Actividad 9.",
-            10: "Descripción de la Actividad 10.",
-            11: "Conclusiones.",
-            12: "Toma de decisiones."
+            0: { title: "Introducción", body: "Introducción y objetivos generales." },
+            1: { title: "Actividad 1", body: "Descripción de la Actividad 1." },
+            2: { title: "Actividad 2", body: "Descripción de la Actividad 2." },
+            3: { title: "Actividad 3", body: "Descripción de la Actividad 3." },
+            4: { title: "Actividad 4", body: "Descripción de la Actividad 4." },
+            5: { title: "Actividad 5", body: "Descripción de la Actividad 5." },
+            6: { title: "Actividad 6", body: "Descripción de la Actividad 6." },
+            7: { title: "Actividad 7", body: "Descripción de la Actividad 7." },
+            8: { title: "Actividad 8", body: "Descripción de la Actividad 8." },
+            9: { title: "Actividad 9", body: "Descripción de la Actividad 9." },
+            10: { title: "Actividad 10", body: "Descripción de la Actividad 10." },
+            11: { title: "Conclusión", body: "Conclusiones y evaluación final." },
+            12: { title: "Toma de Decisiones", body: "Reflexión sobre la toma de decisiones en el proceso." }
         };
 
         let pdfDoc,
@@ -101,8 +105,15 @@
         const navControls = document.getElementById('nav-controls');
 
         function updateNote(index) {
-            const note = pageNotes[index] || "No hay nota para esta sección.";
-            document.getElementById('page-note').innerHTML = `<p>${note}</p>`;
+            const note = pageNotes[index];
+            if (note) {
+                document.getElementById('page-note').innerHTML = `
+                    <h2>${note.title}</h2>
+                    <p>${note.body}</p>
+                `;
+            } else {
+                document.getElementById('page-note').innerHTML = `<p>No hay nota para esta sección.</p>`;
+            }
         }
 
         function renderPage(index) {
@@ -197,5 +208,4 @@
     </script>
 </body>
 </html>
-
 
