@@ -13,13 +13,23 @@
             align-items: center;
             padding: 20px;
         }
+        .text-section {
+            max-width: 800px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
         canvas {
             border: 1px solid #ccc;
             margin-bottom: 20px;
+            max-width: 100%;
+            height: auto;
         }
         .controls {
             display: flex;
             gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
         }
         button {
             padding: 10px 20px;
@@ -29,23 +39,33 @@
 </head>
 <body>
     <h1>PDF Slide Viewer</h1>
+
+    <div class="text-section">
+        <p>This is a slide-style PDF viewer. Use the buttons below to navigate through the pages of the PDF. You can also add descriptions, annotations, or context here.</p>
+    </div>
+
     <canvas id="pdf-canvas"></canvas>
+
     <div class="controls">
         <button id="prev">Previous</button>
         <span>Page <span id="page-num">1</span> of <span id="page-count">?</span></span>
         <button id="next">Next</button>
     </div>
 
+    <div class="text-section">
+        <p>This is additional space below the PDF. You can use it to add notes, summaries, or links.</p>
+    </div>
+
     <!-- PDF.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
-        const url = 'Ordinario.pdf';
+        const url = 'report.pdf'; // Ensure report.pdf is in the same directory
 
         let pdfDoc = null,
             pageNum = 1,
             pageRendering = false,
             pageNumPending = null,
-            scale = 1.5,
+            scale = 1.0,
             canvas = document.getElementById('pdf-canvas'),
             ctx = canvas.getContext('2d');
 
@@ -105,3 +125,4 @@
     </script>
 </body>
 </html>
+
