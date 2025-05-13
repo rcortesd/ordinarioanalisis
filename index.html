@@ -47,6 +47,10 @@
             padding: 10px 20px;
             font-size: 16px;
         }
+        #pdf-canvas.hidden,
+        .controls.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -60,7 +64,7 @@
 
     <canvas id="pdf-canvas"></canvas>
 
-    <div class="controls">
+    <div class="controls" id="nav-controls">
         <button id="prev">Previous</button>
         <span>Page <span id="page-num">1</span> of <span id="page-count">?</span></span>
         <button id="next">Next</button>
@@ -97,12 +101,23 @@
             canvas = document.getElementById('pdf-canvas'),
             ctx = canvas.getContext('2d');
 
+        const navControls = document.getElementById('nav-controls');
+
         function updateNote(num) {
             const note = pageNotes[num] || "No hay nota para esta página.";
             document.getElementById('page-note').innerHTML = `<p>${note}</p>`;
         }
 
         function renderPage(num) {
+            const isPdfPage = num > 1 && num < 12;
+            canvas.classList.toggle('hidden', !isPdfPage);
+            navControls.classList.toggle('hidden', !isPdfPage);
+
+            if (!isPdfPage) {
+                updateNote(num);
+                return;
+            }
+
             pageRendering = true;
             pdfDoc.getPage(num).then(function(page) {
                 const viewport = page.getViewport({ scale: scale });
@@ -163,7 +178,6 @@
             document.getElementById('page-count').textContent = pdfDoc.numPages;
             renderPage(pageNum);
 
-            // Create menu buttons for 12 pages
             const menu = document.getElementById('slide-menu');
             for (let i = 1; i <= 12; i++) {
                 const btn = document.createElement('button');
