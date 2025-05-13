@@ -109,11 +109,11 @@
         }
 
         function renderPage(num) {
-            const isPdfPage = num > 1 && num < 12;
-            canvas.classList.toggle('hidden', !isPdfPage);
-            navControls.classList.toggle('hidden', !isPdfPage);
+            const isPdfPage = num >= 1 && num <= 12;
+            canvas.classList.toggle('hidden', num === 1 || num === 12);
+            navControls.classList.toggle('hidden', num === 1 || num === 12);
 
-            if (!isPdfPage) {
+            if (num === 1 || num === 12) {
                 updateNote(num);
                 return;
             }
@@ -176,15 +176,16 @@
         pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
             pdfDoc = pdfDoc_;
             document.getElementById('page-count').textContent = pdfDoc.numPages;
-            renderPage(pageNum);
 
             const menu = document.getElementById('slide-menu');
-            for (let i = 1; i <= 12; i++) {
+            for (let i = 1; i <= pdfDoc.numPages; i++) {
                 const btn = document.createElement('button');
                 btn.textContent = i === 1 ? 'Introducción' : (i === 12 ? 'Conclusión' : `Actividad ${i - 1}`);
                 btn.addEventListener('click', () => goToPage(i));
                 menu.appendChild(btn);
             }
+
+            renderPage(pageNum);
         }).catch(function(error) {
             console.error('Error loading PDF: ', error);
         });
