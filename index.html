@@ -52,7 +52,8 @@
             font-size: 16px;
         }
         #pdf-canvas.hidden,
-        .controls.hidden {
+        .controls.hidden,
+        #page-indicator.hidden {
             display: none;
         }
     </style>
@@ -65,9 +66,9 @@
     <canvas id="pdf-canvas"></canvas>
 
     <div class="controls" id="nav-controls">
-        <button id="Anterior">Previous</button>
-        <span>Page <span id="page-num">1</span> of <span id="page-count">?</span></span>
-        <button id="Siguiente">Next</button>
+        <button id="prev">Anterior</button>
+        <span id="page-indicator">Página <span id="page-num">1</span> de <span id="page-count">?</span></span>
+        <button id="next">Siguiente</button>
     </div>
 
     <div class="text-section" id="page-note">
@@ -83,15 +84,17 @@
             1: { title: "Actividad 1", body: "Se aprecia que el IMC promedio no cambia mucho con la actividad física en cada sector, pero es notorio que las personas con Obesidad Tipo II y Tipo III no hagan actividad física intensa." },
             2: { title: "Actividad 2", body: "Los medios de transporte como el coche o el camión están distribuidos de manera casi equitativa entre todos los grupos, pero moverse a pie, bicicleta, o en moto se relaciona más a personas en peso normal." },
             3: { title: "Actividad 3", body: "La gran mayoría de las personas con antecedentes de obesidad en su familia consumen alcohol de manera ocasional, mientras que muy pocos son consumidores frecuentes de alcohol." },
-            4: { title: "Actividad 4", body: "La gran mayoría de las personas están por encima de su peso normal, siendo el sobrepeso la categoría más común. Hay una tendencia muy clara hacia la obesidad." },
-            5: { title: "Actividad 5", body: "Conforme aumenta el nivel de Obesidad, también aumenta el promedio de comidas al día. Las personas con Obesidad Tipo III reportan 3 comidas al día en promedio, mientras que las que tienen Obesidad Tipo reportan menos de 2.5." },
+            4: { title: "Actividad 4", body: "La mayoría de las personas están por encima de su peso normal, siendo el sobrepeso la categoría más común. Hay una tendencia clara hacia la obesidad." },
+            5: { title: "Actividad 5", body: "Conforme aumenta el nivel de Obesidad, también aumenta el promedio de comidas al día. Las personas con Obesidad Tipo III reportan 3 comidas al día en promedio, mientras que las que tienen Obesidad Tipo I reportan menos de 2.5." },
             6: { title: "Actividad 6", body: "Los hombres están más representados en la Obesidad de Tipo I y Tipo II, pero las mujeres eclipsan a los hombres en la Obesidad Tipo III." },
             7: { title: "Actividad 7", body: "Generalmente, conforme aumenta el peso, aumenta el IMC, pero no es determinante puesto que hay variación considerable alrededor de los 75 KG." },
             8: { title: "Actividad 8", body: "Parece ser que los alimentos entre comidas no hacen que el IMC promedio baje o suba dentro del mismo Nivel de Obesidad, pero es notorio que solo Obesidad Tipo III no tiene reportes de nunca tener alimentos entre comidas. También es valioso notar que las personas de peso insuficiente que reportan siempre tener alimentos entre comidas tienen el IMC promedio más bajo, lo cual puede indicar hábitos preocupantes." },
-            9: { title: "Actividad 9", body: "La aplastante mayoría de las personas por encima del peso normal tiene antecedentes de obesidad, mientras que las personas en peso normal o bajo están dividos a la mitad, lo que sugeriría que los antecedentes tienen influencia en los niveles de obesidad." },
+            9: { title: "Actividad 9", body: "La mayoría de las personas por encima del peso normal tiene antecedentes de obesidad, mientras que las personas en peso normal o bajo están divididas a la mitad, lo que sugeriría que los antecedentes tienen influencia en los niveles de obesidad." },
             10: { title: "Actividad 10", body: "Se puede apreciar que la Actividad Física promedio disminuye conforme aumenta el Nivel de Obesidad, lo cual indica la importancia de la Actividad Física para mantener un peso sano." },
             11: { title: "Conclusión", body: "Los datos estudiados nos permitieron ver de qué manera influyen los diferentes hábitos y factores en el IMC y, por consiguiente, en la salud de las personas. Es de vital importancia analizar los datos y presentarlos de manera comprensible para poder tomar decisiones informadas y justificadas." },
-            12: { title: "Toma de Decisiones", body: "1. Promover la concientización de los efectos de la obesidad actual en las generaciones futuras, viendo que los antecedentes son determinantes en la salud."<br>"2. Promover la actividad física con campañas publicitarias de salud en escuelas y facilitando el acceso al ejercicio con gimnasios públicos."<br>"3. Promover campañas diferentes para hombres y mujeres, ya que sus problemas parecen ser diferentes, debido a la diferencia masiva en sus distribuciones en los Niveles de Obesidad."}
+            12: { title: "Toma de Decisiones", body: `1. Promover la concientización de los efectos de la obesidad actual en las generaciones futuras, viendo que los antecedentes son determinantes en la salud.<br>
+2. Promover la actividad física con campañas publicitarias de salud en escuelas y facilitando el acceso al ejercicio con gimnasios públicos.<br>
+3. Promover campañas diferentes para hombres y mujeres, ya que sus problemas parecen ser diferentes, debido a la diferencia masiva en sus distribuciones en los Niveles de Obesidad.` }
         };
 
         let pdfDoc,
@@ -103,6 +106,7 @@
             ctx = canvas.getContext('2d');
 
         const navControls = document.getElementById('nav-controls');
+        const pageIndicator = document.getElementById('page-indicator');
 
         function updateNote(index) {
             const note = pageNotes[index];
@@ -120,6 +124,7 @@
             const showPdf = index >= 1 && index <= 10;
             canvas.classList.toggle('hidden', !showPdf);
             navControls.classList.toggle('hidden', !showPdf);
+            pageIndicator.classList.toggle('hidden', !showPdf);
 
             if (!showPdf) {
                 updateNote(index);
@@ -208,4 +213,3 @@
     </script>
 </body>
 </html>
-
