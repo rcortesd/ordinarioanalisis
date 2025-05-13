@@ -58,16 +58,16 @@
     </style>
 </head>
 <body>
-    <h1>PDF Slide Viewer</h1>
+    <h1>PROYECTO FINAL PBI</h1>
 
     <div class="menu" id="slide-menu"></div>
 
     <canvas id="pdf-canvas"></canvas>
 
     <div class="controls" id="nav-controls">
-        <button id="prev">Previous</button>
+        <button id="Anterior">Previous</button>
         <span>Page <span id="page-num">1</span> of <span id="page-count">?</span></span>
-        <button id="next">Next</button>
+        <button id="Siguiente">Next</button>
     </div>
 
     <div class="text-section" id="page-note">
@@ -79,19 +79,19 @@
     <script>
         const url = 'Ordinario.pdf';
         const pageNotes = {
-            0: { title: "Introducción", body: "Introducción y objetivos generales." },
-            1: { title: "Actividad 1", body: "Descripción de la Actividad 1." },
-            2: { title: "Actividad 2", body: "Descripción de la Actividad 2." },
-            3: { title: "Actividad 3", body: "Descripción de la Actividad 3." },
-            4: { title: "Actividad 4", body: "Descripción de la Actividad 4." },
-            5: { title: "Actividad 5", body: "Descripción de la Actividad 5." },
-            6: { title: "Actividad 6", body: "Descripción de la Actividad 6." },
-            7: { title: "Actividad 7", body: "Descripción de la Actividad 7." },
-            8: { title: "Actividad 8", body: "Descripción de la Actividad 8." },
-            9: { title: "Actividad 9", body: "Descripción de la Actividad 9." },
-            10: { title: "Actividad 10", body: "Descripción de la Actividad 10." },
-            11: { title: "Conclusión", body: "Conclusiones y evaluación final." },
-            12: { title: "Toma de Decisiones", body: "Reflexión sobre la toma de decisiones en el proceso." }
+            0: { title: "Introducción", body: "El siguiente proyecto tiene como objetivo analizar las características y hábitos de las personas con obesidad." },
+            1: { title: "Actividad 1", body: "Se aprecia que el IMC promedio no cambia mucho con la actividad física en cada sector, pero es notorio que las personas con Obesidad Tipo II y Tipo III no hagan actividad física intensa." },
+            2: { title: "Actividad 2", body: "Los medios de transporte como el coche o el camión están distribuidos de manera casi equitativa entre todos los grupos, pero moverse a pie, bicicleta, o en moto se relaciona más a personas en peso normal." },
+            3: { title: "Actividad 3", body: "La gran mayoría de las personas con antecedentes de obesidad en su familia consumen alcohol de manera ocasional, mientras que muy pocos son consumidores frecuentes de alcohol." },
+            4: { title: "Actividad 4", body: "La gran mayoría de las personas están por encima de su peso normal, siendo el sobrepeso la categoría más común. Hay una tendencia muy clara hacia la obesidad." },
+            5: { title: "Actividad 5", body: "Conforme aumenta el nivel de Obesidad, también aumenta el promedio de comidas al día. Las personas con Obesidad Tipo III reportan 3 comidas al día en promedio, mientras que las que tienen Obesidad Tipo reportan menos de 2.5." },
+            6: { title: "Actividad 6", body: "Los hombres están más representados en la Obesidad de Tipo I y Tipo II, pero las mujeres eclipsan a los hombres en la Obesidad Tipo III." },
+            7: { title: "Actividad 7", body: "Generalmente, conforme aumenta el peso, aumenta el IMC, pero no es determinante puesto que hay variación considerable alrededor de los 75 KG." },
+            8: { title: "Actividad 8", body: "Parece ser que los alimentos entre comidas no hacen que el IMC promedio baje o suba dentro del mismo Nivel de Obesidad, pero es notorio que solo Obesidad Tipo III no tiene reportes de nunca tener alimentos entre comidas. También es valioso notar que las personas de peso insuficiente que reportan siempre tener alimentos entre comidas tienen el IMC promedio más bajo, lo cual puede indicar hábitos preocupantes." },
+            9: { title: "Actividad 9", body: "La aplastante mayoría de las personas por encima del peso normal tiene antecedentes de obesidad, mientras que las personas en peso normal o bajo están dividos a la mitad, lo que sugeriría que los antecedentes tienen influencia en los niveles de obesidad." },
+            10: { title: "Actividad 10", body: "Se puede apreciar que la Actividad Física promedio disminuye conforme aumenta el Nivel de Obesidad, lo cual indica la importancia de la Actividad Física para mantener un peso sano." },
+            11: { title: "Conclusión", body: "Los datos estudiados nos permitieron ver de qué manera influyen los diferentes hábitos y factores en el IMC y, por consiguiente, en la salud de las personas. Es de vital importancia analizar los datos y presentarlos de manera comprensible para poder tomar decisiones informadas y justificadas." },
+            12: { title: "Toma de Decisiones", body: "1. Promover la concientización de los efectos de la obesidad actual en las generaciones futuras, viendo que los antecedentes son determinantes en la salud."<br>"2. Promover la actividad física con campañas publicitarias de salud en escuelas y facilitando el acceso al ejercicio con gimnasios públicos."<br>"3. Promover campañas diferentes para hombres y mujeres, ya que sus problemas parecen ser diferentes, debido a la diferencia masiva en sus distribuciones en los Niveles de Obesidad."}
         };
 
         let pdfDoc,
