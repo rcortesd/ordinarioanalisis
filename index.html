@@ -13,6 +13,18 @@
             align-items: center;
             padding: 20px;
         }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .menu button {
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+        }
         .text-section {
             max-width: 800px;
             margin-bottom: 20px;
@@ -40,8 +52,10 @@
 <body>
     <h1>PDF Slide Viewer</h1>
 
+    <div class="menu" id="slide-menu"></div>
+
     <div class="text-section">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut nisi vel purus commodo condimentum. Sed a sapien sed ligula feugiat viverra. Curabitur dignissim orci et felis euismod, vel volutpat augue mattis. Integer nec blandit eros. Vivamus nec augue nec tortor laoreet finibus.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut nisi vel purus commodo condimentum. Sed a sapien sed ligula feugiat viverra. Curabitur dignissim orci et felis euismod, vel volutpat augue mattis.</p>
     </div>
 
     <canvas id="pdf-canvas"></canvas>
@@ -52,22 +66,41 @@
         <button id="next">Next</button>
     </div>
 
-    <div class="text-section">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et vestibulum magna, nec accumsan lorem. Integer cursus bibendum eros, non malesuada libero laoreet sed. Vestibulum sed justo ut sem convallis dictum. Cras nec tellus quis sem tristique feugiat non a quam.</p>
+    <div class="text-section" id="page-note">
+        <p>Loading note...</p>
     </div>
 
     <!-- PDF.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
-        const url = 'Ordinario.pdf'; // Ensure Ordinario.pdf is in the same directory
+        const url = 'Ordinario.pdf';
+        const pageNotes = {
+            1: "Introducción y objetivos generales.",
+            2: "Descripción de la Actividad 1.",
+            3: "Descripción de la Actividad 2.",
+            4: "Descripción de la Actividad 3.",
+            5: "Descripción de la Actividad 4.",
+            6: "Descripción de la Actividad 5.",
+            7: "Descripción de la Actividad 6.",
+            8: "Descripción de la Actividad 7.",
+            9: "Descripción de la Actividad 8.",
+            10: "Descripción de la Actividad 9.",
+            11: "Descripción de la Actividad 10.",
+            12: "Conclusiones y evaluación final."
+        };
 
         let pdfDoc,
-            pageNum = 1,
+            pageNum = parseInt(new URLSearchParams(window.location.search).get('page')) || 1,
             pageRendering = false,
             pageNumPending = null,
             scale = 1.0,
             canvas = document.getElementById('pdf-canvas'),
             ctx = canvas.getContext('2d');
+
+        function updateNote(num) {
+            const note = pageNotes[num] || "No hay nota para esta página.";
+            document.getElementById('page-note').innerHTML = `<p>${note}</p>`;
+        }
 
         function renderPage(num) {
             pageRendering = true;
@@ -92,6 +125,7 @@
             });
 
             document.getElementById('page-num').textContent = num;
+            updateNote(num);
         }
 
         function queueRenderPage(num) {
@@ -114,6 +148,13 @@
             queueRenderPage(pageNum);
         }
 
+        function goToPage(num) {
+            if (num >= 1 && num <= pdfDoc.numPages) {
+                pageNum = num;
+                queueRenderPage(pageNum);
+            }
+        }
+
         document.getElementById('prev').addEventListener('click', onPrevPage);
         document.getElementById('next').addEventListener('click', onNextPage);
 
@@ -121,6 +162,15 @@
             pdfDoc = pdfDoc_;
             document.getElementById('page-count').textContent = pdfDoc.numPages;
             renderPage(pageNum);
+
+            // Create menu buttons for 12 pages
+            const menu = document.getElementById('slide-menu');
+            for (let i = 1; i <= 12; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i === 1 ? 'Introducción' : (i === 12 ? 'Conclusión' : `Actividad ${i - 1}`);
+                btn.addEventListener('click', () => goToPage(i));
+                menu.appendChild(btn);
+            }
         }).catch(function(error) {
             console.error('Error loading PDF: ', error);
         });
